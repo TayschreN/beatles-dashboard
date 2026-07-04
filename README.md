@@ -1,4 +1,4 @@
-# 🎸 Beatles Catalog Analytics — Dashboard (Dash)
+# 🎸 Beatles Catalog Analytics — Dashboard 
 
 Dashboard interativo construído com **Dash + Plotly**, a partir da EDA original do catálogo dos Beatles (310 faixas, 1958–1980). Transforma os 10 gráficos estáticos do notebook em uma ferramenta exploratória: filtros cruzados, estatísticas dinâmicas e 8 gráficos que reagem em tempo real.
 
@@ -12,10 +12,7 @@ Dashboard interativo construído com **Dash + Plotly**, a partir da EDA original
 pip install -r requirements.txt
 python app.py
 ```
-
-Depois abra **http://127.0.0.1:8050** no navegador.
-
-## O que tem
+## O que tem:
 
 **Filtros (sidebar)**
 - Intervalo de anos (1958–1980)
