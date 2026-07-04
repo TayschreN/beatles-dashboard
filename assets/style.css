@@ -1,0 +1,673 @@
+/* ============================================================================
+   Beatles Catalog Analytics — identidade visual "fita analógica / estúdio"
+   Paleta e tipografia espelham o dicionário COLORS em app.py — ao mudar uma
+   cor de destaque, atualize também o outro arquivo para manter consistência
+   entre o CSS e os gráficos Plotly.
+   ============================================================================ */
+
+:root {
+  --ink: #0e1015;
+  --surface: #1a1d26;
+  --surface-alt: #21252f;
+  --surface-elevated: #262b38;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text: #f3ede2;
+  --muted: #938ea0;
+
+  --gold: #e0a458;
+  --gold-glow: rgba(224, 164, 88, 0.35);
+  --red: #c23b3b;
+  --blue: #5b8fb0;
+  --green: #7a9b76;
+  --purple: #9b6bb3;
+  --navy: #3d5a73;
+  --gray: #6b6f7a;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+
+  --font-display: "Fraunces", "Iowan Old Style", serif;
+  --font-body: "Inter", -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", monospace;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 26px -10px rgba(0, 0, 0, 0.55);
+  --shadow-card-hover: 0 2px 6px rgba(0, 0, 0, 0.4), 0 20px 40px -12px rgba(0, 0, 0, 0.6);
+  --ease: 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ---------------------------------------------------------------------- *
+ * Base
+ * ---------------------------------------------------------------------- */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--font-body);
+}
+
+.app-container {
+  background:
+    radial-gradient(ellipse 1100px 550px at 50% -8%, rgba(224, 164, 88, 0.07), transparent 60%),
+    var(--ink);
+  min-height: 100vh;
+  padding-bottom: 1rem;
+}
+
+::selection {
+  background: var(--gold-glow);
+  color: var(--text);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-elevated);
+  border-radius: 8px;
+  border: 2px solid var(--ink);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------- *
+ * Header — moldura de estúdio com selos concêntricos (grooves de vinil)
+ * ---------------------------------------------------------------------- */
+
+.header {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.75rem 2rem;
+  margin: 1.25rem 0 1.5rem;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-alt) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.header::before,
+.header::after {
+  content: "";
+  position: absolute;
+  top: -70px;
+  right: -70px;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.header::before {
+  background: repeating-radial-gradient(
+    circle,
+    transparent 0px,
+    transparent 9px,
+    rgba(224, 164, 88, 0.07) 9px,
+    rgba(224, 164, 88, 0.07) 10px
+  );
+}
+
+.header::after {
+  border: 1px solid rgba(224, 164, 88, 0.15);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 1;
+}
+
+.header-emoji {
+  font-size: 2.5rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
+  transition: transform 700ms cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+
+.header:hover .header-emoji {
+  transform: rotate(360deg);
+}
+
+.header-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.7rem;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin: 0;
+}
+
+.header-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 0.2rem 0 0;
+  letter-spacing: 0.01em;
+}
+
+.header-right {
+  z-index: 1;
+  display: flex;
+  align-items: center;
+}
+
+.header-link {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.82rem;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  margin-left: 0.5rem;
+  transition: color var(--ease), background var(--ease), border-color var(--ease);
+  white-space: nowrap;
+}
+
+.header-link:hover {
+  color: var(--ink);
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+/* ---------------------------------------------------------------------- *
+ * Sidebar — "channel strip" de mesa de mixagem
+ * ---------------------------------------------------------------------- */
+
+.sidebar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.4rem;
+  position: sticky;
+  top: 1.25rem;
+}
+
+.sidebar-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  padding-bottom: 0.9rem;
+  margin-bottom: 1.3rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+.filtro-bloco {
+  margin-bottom: 1.2rem;
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--border);
+  transition: border-color var(--ease);
+}
+
+.filtro-bloco:hover,
+.filtro-bloco:focus-within {
+  border-left-color: var(--gold);
+}
+
+.filtro-titulo {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.filtro-resumo {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+#btn-reset {
+  border-color: var(--border-strong) !important;
+  color: var(--muted) !important;
+  background: transparent !important;
+  border-radius: var(--radius-sm) !important;
+  font-size: 0.8rem;
+  letter-spacing: 0.01em;
+  transition: all var(--ease);
+}
+
+#btn-reset:hover {
+  background: var(--gold) !important;
+  border-color: var(--gold) !important;
+  color: var(--ink) !important;
+}
+
+/* Dropdowns (dcc.Dropdown / react-select) */
+.dark-dropdown .Select-control,
+.dark-dropdown .Select-control:hover {
+  background: var(--surface-alt) !important;
+  border: 1px solid var(--border-strong) !important;
+  border-radius: var(--radius-sm) !important;
+  min-height: 38px;
+}
+.dark-dropdown .Select-placeholder,
+.dark-dropdown .Select--single > .Select-control .Select-value {
+  color: var(--muted) !important;
+  line-height: 36px;
+}
+.dark-dropdown .Select-input > input {
+  color: var(--text) !important;
+}
+.dark-dropdown .Select-menu-outer {
+  background: var(--surface-elevated) !important;
+  border: 1px solid var(--border-strong) !important;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card-hover);
+}
+.dark-dropdown .Select-option {
+  background: var(--surface-elevated) !important;
+  color: var(--text) !important;
+}
+.dark-dropdown .Select-option.is-focused,
+.dark-dropdown .Select-option.is-selected {
+  background: var(--gold) !important;
+  color: var(--ink) !important;
+}
+.dark-dropdown .Select--multi .Select-value {
+  background: var(--gold-glow) !important;
+  border: 1px solid var(--gold) !important;
+  color: var(--text) !important;
+  border-radius: 6px;
+}
+.dark-dropdown .Select-value-icon {
+  border-right: 1px solid var(--gold) !important;
+}
+.dark-dropdown .Select-arrow {
+  border-color: var(--muted) transparent transparent !important;
+}
+.dark-dropdown .Select-clear {
+  color: var(--muted) !important;
+}
+
+/* Range slider (dcc.RangeSlider / rc-slider) */
+.dark-slider {
+  margin: 0.6rem 0.3rem 1.6rem;
+}
+.dark-slider .rc-slider-rail {
+  background: var(--surface-alt);
+  height: 4px;
+}
+.dark-slider .rc-slider-track {
+  background: linear-gradient(90deg, var(--gold), var(--red));
+  height: 4px;
+}
+.dark-slider .rc-slider-handle {
+  width: 15px;
+  height: 15px;
+  margin-top: -6px;
+  background: var(--ink);
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 0 4px var(--gold-glow);
+  opacity: 1;
+}
+.dark-slider .rc-slider-handle:hover,
+.dark-slider .rc-slider-handle:focus,
+.dark-slider .rc-slider-handle-dragging {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 6px var(--gold-glow) !important;
+}
+.dark-slider .rc-slider-dot {
+  display: none;
+}
+.dark-slider .rc-slider-mark-text {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+.dark-slider .rc-slider-mark-text-active {
+  color: var(--text);
+}
+.dark-slider .rc-slider-tooltip-inner {
+  background: var(--gold) !important;
+  color: var(--ink) !important;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  box-shadow: none !important;
+}
+.dark-slider .rc-slider-tooltip-arrow {
+  border-top-color: var(--gold) !important;
+}
+
+/* Switch (dbc.Switch) */
+.hits-switch .form-check-input {
+  width: 2.6em;
+  height: 1.35em;
+  background-color: var(--surface-alt);
+  border-color: var(--border-strong);
+}
+.hits-switch .form-check-input:checked {
+  background-color: var(--gold);
+  border-color: var(--gold);
+}
+.hits-switch .form-check-input:focus {
+  box-shadow: 0 0 0 3px var(--gold-glow);
+}
+.hits-switch .form-check-label {
+  color: var(--text);
+  font-size: 0.85rem;
+  padding-left: 0.4rem;
+}
+
+/* ---------------------------------------------------------------------- *
+ * KPIs — mostradores estilo contador de fita
+ * ---------------------------------------------------------------------- */
+
+.kpi-row {
+  margin-bottom: 1.25rem;
+}
+
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.2rem;
+  height: 100%;
+  transition: transform var(--ease), box-shadow var(--ease), border-color var(--ease);
+}
+
+.kpi-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card);
+  border-color: var(--border-strong);
+}
+
+.kpi-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--surface-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin-bottom: 0.65rem;
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+}
+
+.kpi-value {
+  font-family: var(--font-mono);
+  font-size: 1.7rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.kpi-label {
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+
+/* ---------------------------------------------------------------------- *
+ * Charts
+ * ---------------------------------------------------------------------- */
+
+.chart-col {
+  display: flex;
+}
+
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.1rem 0.4rem;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--ease), box-shadow var(--ease), border-color var(--ease);
+}
+
+.chart-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--red), var(--blue));
+  opacity: 0;
+  transition: opacity var(--ease);
+}
+
+.chart-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--border-strong);
+}
+
+.chart-card:hover::before {
+  opacity: 1;
+}
+
+/* dcc.Loading spinner background must stay transparent over dark cards */
+.chart-card .dash-spinner-container {
+  background: transparent !important;
+}
+
+/* Modebar (botão de download do gráfico) combinando com o tema escuro */
+.chart-card .modebar-container {
+  top: 4px !important;
+  right: 4px !important;
+}
+.chart-card .modebar {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.chart-card .modebar-btn path {
+  fill: var(--muted) !important;
+  transition: fill var(--ease);
+}
+.chart-card .modebar-btn:hover {
+  background: var(--surface-alt) !important;
+  border-radius: 6px;
+}
+.chart-card .modebar-btn:hover path {
+  fill: var(--gold) !important;
+}
+
+/* ---------------------------------------------------------------------- *
+ * Insights
+ * ---------------------------------------------------------------------- */
+
+.insights-section {
+  margin-top: 1rem;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  margin: 2.5rem 0 0.35rem;
+}
+
+.section-subtitle {
+  color: var(--muted);
+  font-size: 0.85rem;
+  max-width: 640px;
+  margin-bottom: 1.3rem;
+}
+
+.insight-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.1rem;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  transition: transform var(--ease), border-color var(--ease);
+}
+
+.insight-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+}
+
+.insight-card > i {
+  font-size: 1.15rem;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+.insight-titulo {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.insight-texto {
+  font-size: 0.81rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.disclaimer {
+  font-size: 0.76rem;
+  color: var(--muted);
+  margin-top: 1.6rem;
+  padding: 0.9rem 1rem;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: flex-start;
+}
+
+/* ---------------------------------------------------------------------- *
+ * Alertas / estados vazios
+ * ---------------------------------------------------------------------- */
+
+.alert-warning {
+  background: var(--surface-alt) !important;
+  border: 1px solid var(--gold) !important;
+  color: var(--text) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+/* ---------------------------------------------------------------------- *
+ * Footer
+ * ---------------------------------------------------------------------- */
+
+.footer {
+  text-align: center;
+  padding: 2rem 0 1rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.footer a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* ---------------------------------------------------------------------- *
+ * Entrada suave — cartões sobem e aparecem em sequência
+ * ---------------------------------------------------------------------- */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.kpi-card,
+.chart-card,
+.insight-card {
+  animation: fadeUp 0.5s var(--ease) both;
+}
+
+.kpi-row .col:nth-child(1) .kpi-card { animation-delay: 0ms; }
+.kpi-row .col:nth-child(2) .kpi-card { animation-delay: 40ms; }
+.kpi-row .col:nth-child(3) .kpi-card { animation-delay: 80ms; }
+.kpi-row .col:nth-child(4) .kpi-card { animation-delay: 120ms; }
+.kpi-row .col:nth-child(5) .kpi-card { animation-delay: 160ms; }
+.kpi-row .col:nth-child(6) .kpi-card { animation-delay: 200ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------------- *
+ * Responsivo
+ * ---------------------------------------------------------------------- */
+
+@media (max-width: 991px) {
+  .sidebar {
+    position: static;
+    margin-bottom: 1.25rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.4rem 1.5rem;
+  }
+  .header-right {
+    width: 100%;
+  }
+  .header-link {
+    margin-left: 0;
+    margin-right: 0.5rem;
+  }
+  .kpi-value {
+    font-size: 1.4rem;
+  }
+  .header-title {
+    font-size: 1.35rem;
+  }
+}
